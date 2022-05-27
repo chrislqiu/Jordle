@@ -30,10 +30,14 @@ public class Game {
         String wordToBeGuessed = lib.get(ranIndex);
         System.out.println("Welcome to Jordle! \n\n If the word contains the letter and is in the wrong position the" +
                 " letter will be followed by a '*'.\n If the letter is not apart of the word, the letter will be " +
-                "followed by a '-'.\n Start guessing! (type in all lowercase, thanks!)");
+                "followed by a '-'.\n Start guessing! (type in all lowercase, thanks!)\n");
         int iniRow = 0;
+        String guess = "";
         while (iniRow != 6) {
-            String guess = sc.nextLine();
+            do {
+                System.out.println("Enter a 5 letter word:");
+                guess = sc.nextLine();
+            } while (guess.length() != 5);
             for (int i = 0; i < wordToBeGuessed.length(); i++) {
                 if (wordToBeGuessed.charAt(i) == guess.charAt(i)) {
                     board[iniRow][i] = String.valueOf(guess.charAt(i));
@@ -43,8 +47,18 @@ public class Game {
                     board[iniRow][i] = guess.charAt(i) + "-";
                 }
             }
-            System.out.println(Arrays.deepToString(board));
+            for (int i = 0; i < 6; i++) {
+                System.out.println(Arrays.toString(board[i]));
+            }
             iniRow++;
+            if (guess.equals(wordToBeGuessed)) {
+                break;
+            }
+        }
+        if (wordToBeGuessed.equals(guess)) {
+            System.out.println("Congrats, you guessed the word! It only took you " + iniRow + 1 + "tries, do better?");
+        } else {
+            System.out.println("Sorry, you couldn't guess it, the word was: " + wordToBeGuessed);
         }
     }
 }
