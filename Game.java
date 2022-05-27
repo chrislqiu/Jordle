@@ -23,21 +23,33 @@ public class Game {
         }
     }
 
+    public static void clearBoard() {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                board[i][j] = "";
+            }
+        }
+    }
+
     public static void main(String[] args) {
         readWords();
+        clearBoard();
         Scanner sc = new Scanner(System.in);
         int ranIndex = (int) (Math.random() * (lib.size() + 1) + 0);
         String wordToBeGuessed = lib.get(ranIndex);
         System.out.println("Welcome to Jordle! \n\n If the word contains the letter and is in the wrong position the" +
                 " letter will be followed by a '*'.\n If the letter is not apart of the word, the letter will be " +
-                "followed by a '-'.\n Start guessing! (type in all lowercase, thanks!)\n");
+                "followed by a '-'.\n If the word you enter is longer than 5 letters, contains numbers or special" +
+                " characters, it will prompt you to enter a word again.\n Start guessing!" +
+                " (type in all lowercase, thanks!)\n");
         int iniRow = 0;
         String guess = "";
         while (iniRow != 6) {
             do {
-                System.out.println("Enter a 5 letter word:");
+                System.out.println("Enter your word:");
                 guess = sc.nextLine();
-            } while (guess.length() != 5);
+                //TODO: condition if it contains numbers,  or special characters
+            } while (guess.length() != 5 || guess.contains("0"));
             for (int i = 0; i < wordToBeGuessed.length(); i++) {
                 if (wordToBeGuessed.charAt(i) == guess.charAt(i)) {
                     board[iniRow][i] = String.valueOf(guess.charAt(i));
