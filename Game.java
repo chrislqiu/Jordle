@@ -55,8 +55,7 @@ public class Game {
         System.out.println("Welcome to Jordle! \n\n If the word contains the letter and is in the wrong position the" +
                 " letter will be followed by a '*'.\n If the letter is not apart of the word, the letter will be " +
                 "followed by a '-'.\n If the word you enter is longer than 5 letters, contains numbers or special" +
-                " characters, it will prompt you to enter a word again.\n Start guessing!" +
-                " (type in all lowercase, thanks!)\n");
+                " characters, it will prompt you to enter a word again.\n Start guessing!\n");
         int iniRow = 0;
         String guess = "";
         while (iniRow != 6) {
@@ -65,9 +64,9 @@ public class Game {
                 guess = sc.nextLine();
             } while (!validGuess(guess));
             for (int i = 0; i < wordToBeGuessed.length(); i++) {
-                if (wordToBeGuessed.charAt(i) == guess.charAt(i)) {
+                if (wordToBeGuessed.charAt(i) == Character.toLowerCase(guess.charAt(i))) {
                     board[iniRow][i] = String.valueOf(guess.charAt(i));
-                } else if (wordToBeGuessed.contains(String.valueOf(guess.charAt(i)))) {
+                } else if (wordToBeGuessed.contains(String.valueOf(Character.toLowerCase(guess.charAt(i))))) {
                     board[iniRow][i] = guess.charAt(i) + "*";
                 } else {
                     board[iniRow][i] = guess.charAt(i) + "-";
