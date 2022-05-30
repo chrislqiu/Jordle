@@ -4,6 +4,8 @@ import java.io.FileReader;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Game {
 
@@ -31,6 +33,19 @@ public class Game {
         }
     }
 
+    public static boolean validGuess(String guess) {
+        if (guess.length() == 5) {
+            Pattern digit = Pattern.compile("[0-9]");
+            Pattern special = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
+            Matcher d = digit.matcher(guess);
+            Matcher s = special.matcher(guess);
+            boolean dig = d.find();
+            boolean spe = s.find();
+            return !dig && !spe;
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         readWords();
         clearBoard();
@@ -48,8 +63,7 @@ public class Game {
             do {
                 System.out.println("Enter your word:");
                 guess = sc.nextLine();
-                //TODO: condition if it contains numbers,  or special characters
-            } while (guess.length() != 5 || guess.contains("0"));
+            } while (!validGuess(guess));
             for (int i = 0; i < wordToBeGuessed.length(); i++) {
                 if (wordToBeGuessed.charAt(i) == guess.charAt(i)) {
                     board[iniRow][i] = String.valueOf(guess.charAt(i));
@@ -68,7 +82,7 @@ public class Game {
             }
         }
         if (wordToBeGuessed.equals(guess)) {
-            System.out.println("Congrats, you guessed the word! It only took you " + iniRow + 1 + "tries, do better?");
+            System.out.println("Congrats, you guessed the word! It only took you " + iniRow + " tries, do better?");
         } else {
             System.out.println("Sorry, you couldn't guess it, the word was: " + wordToBeGuessed);
         }
